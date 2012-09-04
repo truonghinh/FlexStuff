@@ -52,6 +52,7 @@
   <!-- SWC Libraries -->
   <libraryPaths>
     <element path="..\libFlex\bin\libFlex.swc" />
+    <element path="lib\tink_flex4_spark.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

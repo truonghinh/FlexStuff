@@ -26,6 +26,7 @@
     </source-path>
     <library-path append="true">
       <path-element>D:\private_projects\GitHub\FlexStuff\libFlex\bin\libFlex.swc</path-element>
+      <path-element>D:\private_projects\GitHub\FlexStuff\Ptkgdt\lib\tink_flex4_spark.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>

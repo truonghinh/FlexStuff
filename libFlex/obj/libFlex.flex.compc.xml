@@ -23,5 +23,15 @@
   <include-classes>
     <class>gp.Main</class>
     <class>gp.comps.XPerson</class>
+    <class>gp.display.IFrame</class>
+    <class>gp.skinComps.ASFunctionExample</class>
+    <class>gp.skinComps.EventBoard</class>
+    <class>gp.skinComps.EventCardClass</class>
+    <class>gp.skinComps.ImageButton</class>
+    <class>gp.skinComps.TimelineBoard</class>
+    <class>gp.skinComps.TimeLineColumn</class>
+    <class>gp.skinComps.XtraTextPad</class>
+    <class>gp.skinComps.XtraTextPadClass</class>
+    <class>gp.skins.EventCardSkin</class>
   </include-classes>
 </flex-config>
