@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+               xmlns:s="library://ns.adobe.com/flex/spark"
+               xmlns:mx="library://ns.adobe.com/flex/mx">
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:Button label="helle" width="100" height="100" click="hello()" />
+	<fx:Script>
+		<![CDATA[
+		import gp.comps.XPerson;
+		import mx.controls.Alert;
+		private function hello():void
+		{
+			var p:XPerson = new XPerson("Hinh");
+			Alert.show(p.Name);
+		}
+		]]>
+	</fx:Script>
+</s:Application>
