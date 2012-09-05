@@ -23,15 +23,22 @@
   <include-classes>
     <class>gp.Main</class>
     <class>gp.comps.XPerson</class>
+    <class>gp.comps.sparkTree.AdvancedDataGrid</class>
+    <class>gp.comps.sparkTree.AdvancedDataGridItemRenderer</class>
+    <class>gp.comps.sparkTree.DefaultADGItemRenderer</class>
+    <class>gp.comps.sparkTree.DefaultDisclosureButton</class>
+    <class>gp.comps.sparkTree.DefaultTreeADGItemRenderer</class>
+    <class>gp.comps.sparkTree.DefaultTreeItemRenderer</class>
+    <class>gp.comps.sparkTree.ITreeItemRenderer</class>
+    <class>gp.comps.sparkTree.Tree</class>
+    <class>gp.comps.sparkTree.TreeDataProvider</class>
+    <class>gp.comps.sparkTree.TreeEvent</class>
+    <class>gp.comps.sparkTree.TreeItemRenderer</class>
     <class>gp.display.IFrame</class>
     <class>gp.skinComps.ASFunctionExample</class>
-    <class>gp.skinComps.EventBoard</class>
-    <class>gp.skinComps.EventCardClass</class>
     <class>gp.skinComps.ImageButton</class>
-    <class>gp.skinComps.TimelineBoard</class>
     <class>gp.skinComps.TimeLineColumn</class>
     <class>gp.skinComps.XtraTextPad</class>
     <class>gp.skinComps.XtraTextPadClass</class>
-    <class>gp.skins.EventCardSkin</class>
   </include-classes>
 </flex-config>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx" 
+	xmlns:sparkTree="gp.comps.sparkTree.*" 
+	viewSourceURL="srcview/index.html"
+	creationComplete="init();">
+	
+	<fx:Script>
+	<![CDATA[
+		import mx.collections.ArrayCollection;
+		import mx.collections.ICollectionView;
+		import mx.collections.IList;
+		import mx.collections.XMLListCollection;
+		import mx.events.CollectionEvent;
+		
+		[Bindable]
+		private var dataProvider:IList = getRandomArrayCollection();
+		
+		private function init():void
+		{
+			dataProvider[0].children = getRandomArrayCollection();
+		}
+		
+		private function getRandomArrayCollection():ArrayCollection
+		{
+			var array:Array = 
+				[
+					new SampleData("Element 0"),
+					new SampleData("Element 1"),
+					new SampleData("Element 2")
+				];
+			return new ArrayCollection(array);
+		}
+		
+		private function iconFunction(item:Object, isOpen:Boolean, isBranch:Boolean):Class
+		{
+			if (isOpen)
+				return SampleData.ICON1;
+			else if (isBranch)
+				return SampleData.ICON2;
+			return SampleData.ICON3;
+		}
+		
+		private function addChildrenToSelectedItem():void
+		{
+			tree.selectedItem.children = getRandomArrayCollection();
+		}
+		
+		private function removeChildrenFromSelectedItem():void
+		{
+			tree.selectedItem.children = null;
+		}
+
+		private function add1000Children():void
+		{
+			var n:int = 1000;
+			var children:ArrayCollection = tree.selectedItem.children;
+			if (!children)
+				children = new ArrayCollection();
+			children.disableAutoUpdate();
+			for (var i:int = 0; i < n; i++)
+			{
+				children.addItem(new SampleData("Element " + i));
+			}
+			children.enableAutoUpdate();
+			tree.selectedItem.children = children;
+		}
+
+		private function setRandomIcon():void
+		{
+			SampleData(tree.selectedItem).setRandomIcon();
+		}
+
+		private function emptyChildrenCollection():void
+		{
+			IList(tree.selectedItem.children).removeAll();
+		}
+
+		private function refreshDataProvider():void
+		{
+			ICollectionView(tree.dataProvider).refresh();
+		}
+
+		private function removeSelectedItem():void
+		{
+			tree.dataProvider.removeItemAt(tree.selectedIndex);
+		}
+
+		private function addItemHere():void
+		{
+			tree.dataProvider.addItemAt(new SampleData("Added element"), tree.selectedIndex);
+		}
+		
+		private function setXMLDataProvider():void
+		{
+			var xml:XML = <root>
+				<folder label="branch1" data="19">
+                    <folder label="branch2" data="16">
+                        <folder label="Click Me will trigger exception" data="17" isBranch="true"/>
+                    </folder>
+                </folder>
+			</root>;
+			var collection:XMLListCollection = new XMLListCollection(xml.children());
+			dataProvider = collection;
+		}
+
+	]]>
+	</fx:Script>
+	
+	<s:layout>
+		<s:VerticalLayout horizontalAlign="center" verticalAlign="middle"/>
+	</s:layout>
+	
+	<sparkTree:Tree id="tree" dataProvider="{dataProvider}"
+		labelField="{dataProvider is XMLListCollection ? '@label' : 'label'}"
+		width="300" height="300" textRollOverColor="yellow" 
+		textSelectedColor="0xFFFFFF" dragEnabled="true" dropEnabled="true"
+		dragMoveEnabled="true">
+		<sparkTree:layout>
+			<s:TileLayout horizontalGap="0" verticalGap="0" orientation="columns"/>
+		</sparkTree:layout>
+	</sparkTree:Tree>
+	
+	<s:Button label="Add children to selected item" enabled="{tree.selectedItem}"
+		click="addChildrenToSelectedItem()"/>
+	
+	<s:Button label="Remove children from selected item" 
+		enabled="{tree.selectedItem &amp;&amp; tree.selectedItem.children}"
+		click="removeChildrenFromSelectedItem()"/>
+	
+	<s:Button label="Empty children collection of selected item" 
+		enabled="{tree.selectedItem &amp;&amp; tree.selectedItem.children &amp;&amp; tree.selectedItem.children.length > 0}"
+		click="emptyChildrenCollection()"/>
+	
+	<s:Button label="Add 1000 child elements" 
+		enabled="{tree.selectedItem}"
+		click="add1000Children()"/>
+	
+	<s:CheckBox id="iconsVisibleCheckBox" label="Show icons" 
+		selected="{tree.iconsVisible}" change="{tree.iconsVisible = iconsVisibleCheckBox.selected}"/>
+	
+	<s:Button label="Set random icon" 
+		enabled="{tree.selectedItem}"
+		click="setRandomIcon()"/>
+	
+	<s:Button label="Refresh dataProvider" 
+		click="refreshDataProvider()"/>
+	
+	<s:Button label="Remove selected item" enabled="{tree.selectedItem}"
+		click="removeSelectedItem()"/>
+	
+	<s:Button label="Add item here" enabled="{tree.selectedItem}"
+		click="addItemHere()"/>
+	
+	<s:Button label="Set XML as dataProvider"
+		click="setXMLDataProvider()"/>
+	
+</s:Application>

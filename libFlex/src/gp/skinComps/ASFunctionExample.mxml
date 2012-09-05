@@ -4,7 +4,7 @@
 		  xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
-		<fx:XML id="extTxtFlow" source="../data/test2.xml" />
+		<fx:XML id="extTxtFlow" source="../../../data/test2.xml" />
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[

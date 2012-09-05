@@ -4,7 +4,8 @@
                xmlns:mx="library://ns.adobe.com/flex/mx"
 			   xmlns:os="http://openscales.org"
 			   xmlns:st="library://ns.tink.ws/flex/spark"
-			   initialize="initCollections();">
+			   xmlns:sparkTree="gp.comps.sparkTree.*"
+			   initialize="initCollections();" creationComplete="initAccording();">
 	<fx:Style source="../defaults.css" />
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -164,18 +165,18 @@
 							</s:layout>
 						</s:BorderContainer>
 						<mx:Spacer width="9" height="100%"/>
-						<s:Group width="9" height="{leftBottomBttns.height}" styleName="linesBg">
+						<!--<s:Group width="9" height="{leftBottomBttns.height}" styleName="linesBg">
 							<s:layout>
 								<s:VerticalLayout />
 							</s:layout>
-						</s:Group>
+						</s:Group>-->
 					</s:BorderContainer>
 					<s:BorderContainer width="100%" height="100%" styleName="darkGreyShadowBg" borderStyle="inset" borderWeight="2">
 						<s:layout>
 							<s:VerticalLayout paddingBottom="0" paddingLeft="6" paddingRight="6" paddingTop="6" gap="0"/>
 						</s:layout>	
 						
-						<s:BorderContainer width="100%" borderStyle="inset" id="navBoxGroup">
+						<s:BorderContainer width="100%" borderVisible="false" id="navBoxGroup">
 							<s:layout>
 								<s:VerticalLayout paddingBottom="6" gap="0"/>
 							</s:layout>
@@ -190,157 +191,33 @@
 										<fx:Array>
 											<fx:Object label="FIT"/>
 											<fx:Object label="FILL"/>
-											<fx:Object label="1:1"/>
-											<fx:Object label="3:1"/>
 										</fx:Array>
 									</mx:dataProvider>
 								</mx:ToggleButtonBar>
 							</s:Group>
-							<s:Group width="100%" height="200" styleName="darkGreyBg" resizeEffect="Resize" id="navBox">
+							<mx:Accordion openDuration="200" openEasingFunction="{Bounce.easeOut}" width="100%" height="1000">
+								<mx:VBox label="First VBox" width="100%" resizeEffect="Resize">
+									<sparkTree:Tree id="tree" dataProvider="{dataProvider}"
+										labelField="{dataProvider is XMLListCollection ? '@label' : 'label'}"
+										width="100%" height="100%" textRollOverColor="yellow" 
+										textSelectedColor="0xFFFFFF" dragEnabled="true" dropEnabled="true"
+										dragMoveEnabled="true">
+										<sparkTree:layout>
+											<s:TileLayout horizontalGap="0" verticalGap="0" orientation="columns"/>
+										</sparkTree:layout>
+									</sparkTree:Tree>
+								</mx:VBox>
+								<mx:VBox label="Second VBox">
+									<mx:TextInput/>
+									<mx:Button label="Button 2"/>
+								</mx:VBox>
+							</mx:Accordion>
+							<!--<s:Group width="100%" height="200" styleName="darkGreyBg" resizeEffect="Resize" id="navBox">
 								<s:layout>
 									<s:VerticalLayout />
 								</s:layout>
-							</s:Group>
+							</s:Group>-->
 						</s:BorderContainer>
-						
-						<s:Group id="bottomBoxHolder" width="100%" height="100%" >
-							<s:Scroller width="100%" height="100%" verticalScrollPolicy="auto">
-								<s:Group id="bottomBoxGroup" width="{bottomBoxHolder.width-16}">
-									<s:layout>
-										<s:VerticalLayout gap="0"/>
-									</s:layout>
-									<!--<s:Scroller verticalScrollPolicy="off">-->
-									
-									<s:Group width="100%" height="30" >
-										<s:layout>
-											<s:HorizontalLayout verticalAlign="middle"/>
-										</s:layout>
-										<mx:Button label="Library" styleName="sectionButton" toggle="true" height="20" click="sizeLibraryBox()"/>
-									</s:Group>
-									
-									<s:Group styleName="lightGreyBg" width="100%" height="8" id="libBox" resizeEffect="Resize">
-										<s:layout>
-											<s:VerticalLayout />
-										</s:layout>
-									</s:Group>
-									
-									<s:Group width="100%" height="30" >
-										<s:layout>
-											<s:HorizontalLayout verticalAlign="middle"/>
-										</s:layout>
-										<mx:Button label="Find" styleName="sectionButton" toggle="true" height="20" click="sizeFindBox()"/>
-									</s:Group>
-									
-									<s:Group width="100%" height="6" styleName="lightGreyBg"  id="findBox" resizeEffect="Resize">
-										<s:layout>
-											<s:VerticalLayout paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="6"/>
-										</s:layout>
-										<s:Group width="100%">
-											<s:layout>
-												<s:HorizontalLayout />
-											</s:layout>
-											<mx:CheckBox label="Any Text" paddingTop="2"/>
-											<mx:Spacer width="100%" height="20"/>
-											<mx:ComboBox>
-												<mx:dataProvider>
-													<fx:Array>
-														<fx:Object label="Containing All"/>
-														<fx:Object label="Item"/>
-														<fx:Object label="Item"/>
-														<fx:Object label="Item"/>
-														<fx:Object label="Item"/>
-													</fx:Array>
-												</mx:dataProvider>
-											</mx:ComboBox>
-										</s:Group>
-									</s:Group>
-									
-									<s:Group width="100%" height="30">
-										<s:layout>
-											<s:HorizontalLayout verticalAlign="middle"/>
-										</s:layout>
-										<mx:Button label="Folders" styleName="sectionButton" toggle="true" height="20" click="sizeFolderBox()"/>
-										<mx:Spacer height="100%" width="100%"/>
-										<mx:Button styleName="plus" width="10" height="10"/>
-									</s:Group>
-									
-									<s:Group width="100%" height="6" styleName="lightGreyBg" id="folderBox" resizeEffect="Resize" >
-										<s:layout>
-											<s:VerticalLayout paddingLeft="1" paddingRight="2" paddingTop="1" paddingBottom="2"/>
-										</s:layout>
-										<mx:Tree width="100%" height="100%" id="tree" showRoot="false" labelField="@label" creationComplete="initTree();"></mx:Tree>
-									</s:Group>
-									
-									<s:Group width="100%" height="30" >
-										<s:layout>
-											<s:HorizontalLayout verticalAlign="middle"/>
-										</s:layout>
-										<mx:Button label="Collections" styleName="sectionButton" toggle="true" height="20" click="sizeCollectBox()"/>
-										<mx:Spacer height="100%" width="100%"/>
-										<mx:Button styleName="plus" width="10" height="10"/>
-									</s:Group>
-									<s:Group width="100%" height="8" styleName="lightGreyBg" id="collectBox" resizeEffect="Resize">
-										<s:layout>
-											<s:VerticalLayout />
-										</s:layout>
-									</s:Group>
-									
-									<s:Group width="100%" height="30" >
-										<s:layout>
-											<s:HorizontalLayout verticalAlign="middle"/>
-										</s:layout>
-										<mx:Button label="Keyword Tags" styleName="sectionButton" toggle="true" height="20" click="sizeTagBox()"/>
-										<mx:Spacer height="100%" width="100%"/>
-										<mx:Button styleName="plus" width="10" height="10"/>
-									</s:Group>
-									<s:Group width="100%" height="8" styleName="lightGreyBg" id="tagsBox" resizeEffect="Resize">
-										<s:layout>
-											<s:VerticalLayout />
-										</s:layout>
-									</s:Group>
-									
-									<s:Group width="100%" height="30" >
-										<s:layout>
-											<s:HorizontalLayout verticalAlign="middle"/>
-										</s:layout>
-										<mx:Button label="Metadata Browser" styleName="sectionButton" toggle="true" height="20" click="sizeMetaBox()"/>
-									</s:Group>
-									<s:Group width="100%" height="8" styleName="lightGreyBg" id="metaBox" resizeEffect="Resize">
-										<s:layout>
-											<s:VerticalLayout />
-										</s:layout>
-									</s:Group>
-									
-									<s:Group width="100%" >
-										<s:layout>
-											<s:VerticalLayout horizontalAlign="center" paddingTop="10"/>
-										</s:layout>
-										<mx:Image horizontalAlign="center">
-											<!--<mx:source>@Embed(source='styles/darkroom.swf',symbol='finial')</mx:source>-->
-										</mx:Image>
-									</s:Group>
-									<!--</s:Scroller>-->
-								</s:Group>
-								
-								
-								
-							</s:Scroller>
-							
-						</s:Group>
-						
-						<s:Group width="100%"  id="leftBottomBttns">
-							<s:layout>
-								<s:VerticalLayout horizontalAlign="center" paddingBottom="4"/>
-							</s:layout>
-							<mx:HRule width="100%"/>
-							<s:Group>
-								<s:layout>
-									<s:HorizontalLayout gap="5"/>
-								</s:layout>
-								<mx:Button label="Import..." width="106" height="30" fontSize="16"/>
-								<mx:Button label="Export..." width="106" height="30" fontSize="16" enabled="false"/>
-							</s:Group>
-						</s:Group>
 						
 					</s:BorderContainer>
 				</mx:HBox>
@@ -687,8 +564,109 @@
 			import mx.collections.XMLListCollection;
 			import mx.core.mx_internal;
 			import mx.events.FlexEvent;
+			import mx.effects.easing.Bounce;
+			import mx.collections.ArrayCollection;
+			import mx.collections.ICollectionView;
+			import mx.collections.IList;
+			import mx.events.CollectionEvent;
 			
 			import org.openscales.fx.control.Pan;
+			
+			/*
+			 * ===================================
+			 * ===================================
+			 * -------Bat dau cho left According
+			 * */
+			[Bindable]private var dataProvider:IList = getRandomArrayCollection();
+			 private function initAccording():void
+			{
+				dataProvider[0].children = getRandomArrayCollection();
+			}
+			private function getRandomArrayCollection():ArrayCollection
+			{
+				var array:Array = 
+					[
+						new SampleData("Element 0"),
+						new SampleData("Element 1"),
+						new SampleData("Element 2")
+					];
+				return new ArrayCollection(array);
+			}
+			private function iconFunction(item:Object, isOpen:Boolean, isBranch:Boolean):Class
+			{
+				if (isOpen)
+					return SampleData.ICON1;
+				else if (isBranch)
+					return SampleData.ICON2;
+				return SampleData.ICON3;
+			}
+			private function addChildrenToSelectedItem():void
+			{
+				tree.selectedItem.children = getRandomArrayCollection();
+			}
+			
+			private function removeChildrenFromSelectedItem():void
+			{
+				tree.selectedItem.children = null;
+			}
+
+			private function add1000Children():void
+			{
+				var n:int = 1000;
+				var children:ArrayCollection = tree.selectedItem.children;
+				if (!children)
+					children = new ArrayCollection();
+				children.disableAutoUpdate();
+				for (var i:int = 0; i < n; i++)
+				{
+					children.addItem(new SampleData("Element " + i, "Comment " + i));
+				}
+				children.enableAutoUpdate();
+				tree.selectedItem.children = children;
+			}
+
+			private function setRandomIcon():void
+			{
+				SampleData(tree.selectedItem).setRandomIcon();
+			}
+
+			private function emptyChildrenCollection():void
+			{
+				IList(tree.selectedItem.children).removeAll();
+			}
+
+			private function refreshDataProvider():void
+			{
+				ICollectionView(tree.dataProvider).refresh();
+			}
+
+			private function removeSelectedItem():void
+			{
+				tree.dataProvider.removeItemAt(tree.selectedIndex);
+			}
+
+			private function addItemHere():void
+			{
+				tree.dataProvider.addItemAt(new SampleData("Added element"), tree.selectedIndex);
+			}
+			
+			private function setXMLDataProvider():void
+			{
+				var xml:XML = <root>
+					<folder label="branch1" data="19">
+						<folder label="branch2" data="16">
+							<folder label="Click Me will trigger exception" data="17" isBranch="true"/>
+						</folder>
+					</folder>
+				</root>;
+				var collection:XMLListCollection = new XMLListCollection(xml.children());
+				dataProvider = collection;
+			}
+			 /*
+			  * --------Ket thuc left According
+			  * ==================================
+			  * */
+			
 			public function sizeTopPanel():void
 			{
 				if (topPanel.height<=2) {
@@ -710,83 +688,83 @@
 //			/*  Collapse : Expand Navigator Box */
 			public function sizeNavBox():void
 			{
-				if (navBox.height<=8) {
+				/*if (navBox.height<=8) {
 					navBox.height=200;
 				}
 				else if (navBox.height>=8){
 					navBox.height=8;
-				}
+				}*/
 			}
 //			
 //			/*  Collapse : Expand Library Box */
 			public function sizeLibraryBox():void
 			{
-				if (libBox.height<=8) {
+				/*if (libBox.height<=8) {
 					libBox.height=200;
 				}
 				else if (libBox.height>=8){
 					libBox.height=8;
-				}
+				}*/
 			}
 //			
 //			/*  Collapse : Expand Find Box */
 			public function sizeFindBox():void
 			{
-				if (findBox.height<=6) {
+				/*if (findBox.height<=6) {
 					findBox.height=200;
 				}
 				else if (findBox.height>=6){
 					findBox.height=6;
-				}
+				}*/
 			}
 //			
 //			/*  Collapse : Expand Folders Box */
 			public function sizeFolderBox():void
 			{
-				if (folderBox.height<=6) {
+				/*if (folderBox.height<=6) {
 					folderBox.height=200;
 				}
 				else if (folderBox.height>=6){
 					folderBox.height=6;
-				}
+				}*/
 			}
 //			
 //			// Initialize the data provider for the Tree.
 			private function initTree():void {
-				tree.dataProvider = treeData;
+				//tree.dataProvider = treeData;
 			}
 //			
 //			/*  Collapse : Expand Collections Box */
 			public function sizeCollectBox():void
 			{
-				if (collectBox.height<=8) {
+				/*if (collectBox.height<=8) {
 					collectBox.height=200;
 				}
 				else if (collectBox.height>=8){
 					collectBox.height=8;
-				}
+				}*/
 			}
 //			
 //			/*  Collapse : Expand Keyword Tags Box */
 			public function sizeTagBox():void
 			{
-				if (tagsBox.height<=8) {
+				/*if (tagsBox.height<=8) {
 					tagsBox.height=200;
 				}
 				else if (tagsBox.height>=8){
 					tagsBox.height=8;
-				}
+				}*/
 			}
 //			
 //			/*  Collapse : Expand Metadata Browser Box */
 			public function sizeMetaBox():void
 			{
-				if (metaBox.height<=8) {
+				/*if (metaBox.height<=8) {
 					metaBox.height=200;
 				}
 				else if (metaBox.height>=8){
 					metaBox.height=8;
-				}
+				}*/
 			}
 			
 			private var menuBarXML:XMLList =

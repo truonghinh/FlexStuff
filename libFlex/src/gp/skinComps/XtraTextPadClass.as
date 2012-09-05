@@ -3,7 +3,7 @@ package gp.skinComps
 	
 	import flash.events.MouseEvent;
 	
-	import gp.skins.XtraTextPadSkin;
+	//import gp.skins.XtraTextPadSkin;
 	
 	import mx.core.IVisualElementContainer;
 	
@@ -22,7 +22,7 @@ package gp.skinComps
 			//TODO: implement function.
 			/** b) Implement the constructor. */ 
 			super();
-			setStyle("skinClass", XtraTextPadSkin);
+			//setStyle("skinClass", XtraTextPadSkin);
 		}
 		
 		

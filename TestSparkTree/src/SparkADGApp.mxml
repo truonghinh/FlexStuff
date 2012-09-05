@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx" 
+	xmlns:sparkTree="com.sparkTree.*" 
+	viewSourceURL="srcview/index.html"
+	creationComplete="init();">
+	
+	<fx:Script>
+	<![CDATA[
+		import mx.collections.ArrayCollection;
+		import mx.collections.ICollectionView;
+		import mx.collections.IList;
+		import mx.collections.XMLListCollection;
+		import mx.events.CollectionEvent;
+		
+		[Bindable]
+		private var dataProvider:IList = getRandomArrayCollection();
+		
+		private function init():void
+		{
+			dataProvider[0].children = getRandomArrayCollection();
+		}
+		
+		private function getRandomArrayCollection():ArrayCollection
+		{
+			var array:Array = 
+				[
+					new SampleData("Element 0", "Comment 0"),
+					new SampleData("Element 1", "Comment 1"),
+					new SampleData("Element 2", "Comment 2")
+				];
+			return new ArrayCollection(array);
+		}
+		
+		private function iconFunction(item:Object, isOpen:Boolean, isBranch:Boolean):Class
+		{
+			if (isOpen)
+				return SampleData.ICON1;
+			else if (isBranch)
+				return SampleData.ICON2;
+			return SampleData.ICON3;
+		}
+		
+		private function addChildrenToSelectedItem():void
+		{
+			grid.selectedItem.children = getRandomArrayCollection();
+		}
+		
+		private function removeChildrenFromSelectedItem():void
+		{
+			grid.selectedItem.children = null;
+		}
+
+		private function add1000Children():void
+		{
+			var n:int = 1000;
+			var children:ArrayCollection = grid.selectedItem.children;
+			if (!children)
+				children = new ArrayCollection();
+			children.disableAutoUpdate();
+			for (var i:int = 0; i < n; i++)
+			{
+				children.addItem(new SampleData("Element " + i, "Comment " + i));
+			}
+			children.enableAutoUpdate();
+			grid.selectedItem.children = children;
+		}
+
+		private function setRandomIcon():void
+		{
+			SampleData(grid.selectedItem).setRandomIcon();
+		}
+
+		private function emptyChildrenCollection():void
+		{
+			IList(grid.selectedItem.children).removeAll();
+		}
+
+		private function refreshDataProvider():void
+		{
+			ICollectionView(grid.dataProvider).refresh();
+		}
+
+		private function removeSelectedItem():void
+		{
+			grid.dataProvider.removeItemAt(grid.selectedIndex);
+		}
+
+		private function addItemHere():void
+		{
+			grid.dataProvider.addItemAt(new SampleData("Added element"), grid.selectedIndex);
+		}
+		
+		private function setXMLDataProvider():void
+		{
+			var xml:XML = <root>
+				<folder label="branch1" data="19">
+                    <folder label="branch2" data="16">
+                        <folder label="Click Me will trigger exception" data="17" isBranch="true"/>
+                    </folder>
+                </folder>
+			</root>;
+			var collection:XMLListCollection = new XMLListCollection(xml.children());
+			dataProvider = collection;
+		}
+
+	]]>
+	</fx:Script>
+	
+	<s:layout>
+		<s:VerticalLayout horizontalAlign="center" verticalAlign="middle"/>
+	</s:layout>
+	
+	<sparkTree:AdvancedDataGrid id="grid" dataProvider="{dataProvider}"
+		width="300" height="300" textRollOverColor="yellow" 
+		textSelectedColor="0xFFFFFF" variableRowHeight="true" iconsVisible="false">
+		<sparkTree:columns>
+			<s:ArrayList>
+				<s:GridColumn dataField="label" headerText="Label"
+					itemRenderer="com.sparkTree.DefaultTreeADGItemRenderer"/>
+				<s:GridColumn dataField="secondLabel" headerText="Second Label"/>
+			</s:ArrayList>
+		</sparkTree:columns>
+	</sparkTree:AdvancedDataGrid>
+	
+	<s:Button label="Add children to selected item" enabled="{grid.selectedItem}"
+		click="addChildrenToSelectedItem()"/>
+	
+	<s:Button label="Remove children from selected item" 
+		enabled="{grid.selectedItem &amp;&amp; grid.selectedItem.children}"
+		click="removeChildrenFromSelectedItem()"/>
+	
+	<s:Button label="Empty children collection of selected item" 
+		enabled="{grid.selectedItem &amp;&amp; grid.selectedItem.children &amp;&amp; grid.selectedItem.children.length > 0}"
+		click="emptyChildrenCollection()"/>
+	
+	<s:Button label="Add 1000 child elements" 
+		enabled="{grid.selectedItem}"
+		click="add1000Children()"/>
+	
+	<s:CheckBox id="iconsVisibleCheckBox" label="Show icons" 
+		selected="{grid.iconsVisible}" change="{grid.iconsVisible = iconsVisibleCheckBox.selected}"/>
+	
+	<s:Button label="Set random icon" 
+		enabled="{grid.selectedItem}"
+		click="setRandomIcon()"/>
+	
+	<s:Button label="Refresh dataProvider" 
+		click="refreshDataProvider()"/>
+	
+	<s:Button label="Remove selected item" enabled="{grid.selectedItem}"
+		click="removeSelectedItem()"/>
+	
+	<s:Button label="Add item here" enabled="{grid.selectedItem}"
+		click="addItemHere()"/>
+	
+	<!-- XMLListCollection as dataProvider causes exception for some reason.
+	<s:Button label="Set XML as dataProvider"
+		click="setXMLDataProvider()"/>-->
+	
+</s:Application>
