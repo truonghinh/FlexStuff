@@ -41,6 +41,8 @@ package gp
 		
 		[Bindable]public var icon:Class;
 		
+		[Bindable]public var value:String;
+		
 		public function setRandomIcon():void
 		{
 			icon = getRandomIcon();

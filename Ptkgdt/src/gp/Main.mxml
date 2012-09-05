@@ -176,10 +176,11 @@
 							<s:VerticalLayout paddingBottom="0" paddingLeft="6" paddingRight="6" paddingTop="6" gap="0"/>
 						</s:layout>	
 						
-						<s:BorderContainer width="100%" borderVisible="false" id="navBoxGroup">
+						<s:BorderContainer width="100%" borderVisible="false" id="navBoxGroup" height="100%">
 							<s:layout>
 								<s:VerticalLayout paddingBottom="6" gap="0"/>
 							</s:layout>
+							
 							<s:Group width="100%" height="30">
 								<s:layout>
 									<s:HorizontalLayout gap="0" verticalAlign="middle"/>
@@ -195,9 +196,36 @@
 									</mx:dataProvider>
 								</mx:ToggleButtonBar>
 							</s:Group>
-							<mx:Accordion openDuration="200" openEasingFunction="{Bounce.easeOut}" width="100%" height="1000">
+							<s:Scroller verticalScrollPolicy="auto" width="100%" height="100%">
+								<s:Group width="{navBoxGroup.width-16}" height="100%">
+									<s:layout>
+										<s:VerticalLayout paddingBottom="6" paddingLeft="6" paddingRight="0" paddingTop="6" gap="0"/>
+									</s:layout>
+							<mx:Accordion openDuration="1000" openEasingFunction="{Bounce.easeOut}" width="100%" height="1000">
 								<mx:VBox label="First VBox" width="100%" resizeEffect="Resize">
-									<sparkTree:Tree id="tree" dataProvider="{dataProvider}"
+									<sparkTree:Tree dataProvider="{dataProvider}"
+										labelField="{dataProvider is XMLListCollection ? '@label' : 'label'}"
+										width="100%" height="100%" textRollOverColor="yellow" 
+										textSelectedColor="0xFFFFFF" dragEnabled="true" dropEnabled="true"
+										dragMoveEnabled="true" change="onChangeListItem(event)">
+										<sparkTree:layout>
+											<s:TileLayout horizontalGap="0" verticalGap="0" orientation="columns"/>
+										</sparkTree:layout>
+									</sparkTree:Tree>
+								</mx:VBox>
+								<mx:VBox label="Second VBox">
+									<sparkTree:Tree dataProvider="{dataProvider}"
+										labelField="{dataProvider is XMLListCollection ? '@label' : 'label'}"
+										width="100%" height="100%" textRollOverColor="yellow" 
+										textSelectedColor="0xFFFFFF" dragEnabled="true" dropEnabled="true"
+										dragMoveEnabled="true">
+										<sparkTree:layout>
+											<s:TileLayout horizontalGap="0" verticalGap="0" orientation="columns"/>
+										</sparkTree:layout>
+									</sparkTree:Tree>
+								</mx:VBox>
+								<mx:VBox label="Second VBox">
+									<sparkTree:Tree dataProvider="{dataProvider}"
 										labelField="{dataProvider is XMLListCollection ? '@label' : 'label'}"
 										width="100%" height="100%" textRollOverColor="yellow" 
 										textSelectedColor="0xFFFFFF" dragEnabled="true" dropEnabled="true"
@@ -211,7 +239,25 @@
 									<mx:TextInput/>
 									<mx:Button label="Button 2"/>
 								</mx:VBox>
+								<mx:VBox label="Second VBox">
+									<mx:TextInput/>
+									<mx:Button label="Button 2"/>
+								</mx:VBox>
+								<mx:VBox label="Second VBox">
+									<mx:TextInput/>
+									<mx:Button label="Button 2"/>
+								</mx:VBox>
+								<mx:VBox label="Second VBox">
+									<mx:TextInput/>
+									<mx:Button label="Button 2"/>
+								</mx:VBox>
+								<mx:VBox label="Second VBox">
+									<mx:TextInput/>
+									<mx:Button label="Button 2"/>
+								</mx:VBox>
 							</mx:Accordion>
+							</s:Group>
+							</s:Scroller>
 							<!--<s:Group width="100%" height="200" styleName="darkGreyBg" resizeEffect="Resize" id="navBox">
 								<s:layout>
 									<s:VerticalLayout />
@@ -560,6 +606,9 @@
 		<![CDATA[
 			import gov.hcmgis.flash.skins.PanelSkin;
 			import gov.hcmgis.flash.skins.skin4Slider;
+			import mx.controls.Alert;
+			import mx.events.ItemClickEvent;
+			import spark.events.IndexChangeEvent;
 			
 			import mx.collections.XMLListCollection;
 			import mx.core.mx_internal;
@@ -600,7 +649,15 @@
 					return SampleData.ICON2;
 				return SampleData.ICON3;
 			}
-			private function addChildrenToSelectedItem():void
+			private function onChangeListItem(evt:IndexChangeEvent):void {
+				
+				var data:SampleData = evt.currentTarget.selectedItem;
+				var className:String = flash.utils.getQualifiedClassName( data );
+                Alert.show("a",className+" "+data.label);
+				
+				
+            }
+			/*private function addChildrenToSelectedItem():void
 			{
 				tree.selectedItem.children = getRandomArrayCollection();
 			}
@@ -648,7 +705,7 @@
 			private function addItemHere():void
 			{
 				tree.dataProvider.addItemAt(new SampleData("Added element"), tree.selectedIndex);
-			}
+			}*/
 			
 			private function setXMLDataProvider():void
 			{
