@@ -1,37 +1,27 @@
-package gp 
+package gp.data 
 {
+	import flash.events.EventDispatcher;
+	import flash.events.TimerEvent;
+	import mx.collections.ArrayCollection;
 	/**
 	 * ...
 	 * @author truonghinh
 	 */
-	import flash.events.EventDispatcher;
-
-	import mx.collections.ArrayCollection;
-
-	public class SampleData extends EventDispatcher
+	public class EventObj extends EventDispatcher
 	{
-		
-		[Embed("../assets/images/icon1.png")]
+		[Embed("../../assets/images/icon1.png")]
 		public static var ICON1:Class;
 		
-		[Embed("../assets/images/icon2.png")]
+		[Embed("../../assets/images/icon2.png")]
 		public static var ICON2:Class;
 		
-		[Embed("../assets/images/icon3.png")]
+		[Embed("../../assets/images/icon3.png")]
 		public static var ICON3:Class;
 		
-		[Embed("../assets/images/icon4.png")]
+		[Embed("../../assets/images/icon4.png")]
 		public static var ICON4:Class;
 		
 		private static var icons:Vector.<Class> = Vector.<Class>([ ICON1, ICON2, ICON3, ICON4 ]);
-		
-		public function SampleData(label:String = null, secondLabel:String = null)
-		{
-			super();
-			
-			this.label = label;
-			this.secondLabel = secondLabel;
-		}
 		
 		[Bindable]public var label:String;
 		
@@ -43,7 +33,19 @@ package gp
 		
 		[Bindable]public var value:String;
 		
+		[Bindable]public var firstTime:Time;
 		
+		[Bindable]public var secondTime:Time;
+		
+		public function EventObj(label:String=null,secondLabel:String=null,firstTime:Time=null,secondTime:Time=null,value:String=null) 
+		{
+			super();
+			this.label = label;
+			this.secondLabel = secondLabel;
+			this.firstTime = firstTime;
+			this.secondTime = secondTime;
+			this.value = value;
+		}
 		
 		public function setRandomIcon():void
 		{

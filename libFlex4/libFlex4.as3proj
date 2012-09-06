@@ -1,22 +1,20 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<project version="2">
+<?xml version="1.0" encoding="utf-8"?>
+<project>
   <!-- Output SWF options -->
   <output>
-    <movie outputType="Application" />
+    <movie disabled="False" />
     <movie input="" />
-    <movie path="bin\Ptkgdt.swf" />
+    <movie path="bin\libFlex4.swf" />
     <movie fps="30" />
     <movie width="800" />
     <movie height="600" />
-    <movie version="11" />
-    <movie minorVersion="0" />
-    <movie platform="Flash Player" />
+    <movie version="10" />
+    <movie minorVersion="2" />
     <movie background="#FFFFFF" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
     <class path="src" />
-    <class path="..\libFlex4\bin" />
   </classpaths>
   <!-- Build options -->
   <build>
@@ -24,13 +22,10 @@
     <option allowSourcePathOverlap="False" />
     <option benchmark="False" />
     <option es="False" />
-    <option locale="" />
     <option loadConfig="" />
     <option optimize="True" />
-    <option omitTraces="True" />
     <option showActionScriptWarnings="True" />
     <option showBindingWarnings="True" />
-    <option showInvalidCSS="True" />
     <option showDeprecationWarnings="True" />
     <option showUnusedTypeSelectorWarnings="True" />
     <option strict="True" />
@@ -38,12 +33,9 @@
     <option useResourceBundleMetadata="True" />
     <option warnings="True" />
     <option verboseStackTraces="False" />
-    <option linkReport="" />
-    <option loadExterns="" />
     <option staticLinkRSL="True" />
     <option additional="" />
-    <option compilerConstants="" />
-    <option minorVersion="" />
+    <option customSDK="" />
   </build>
   <!-- SWC Include Libraries -->
   <includeLibraries>
@@ -51,8 +43,7 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
-    <element path="lib\tink_flex4_spark.swc" />
-    <element path="..\libFlex4\bin\libFlex4.swc" />
+    <!-- example: <element path="..." /> -->
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
@@ -87,6 +78,4 @@
     <option showHiddenPaths="False" />
     <option testMovie="Default" />
   </options>
-  <!-- Plugin storage -->
-  <storage />
 </project>

@@ -102,7 +102,7 @@ public class Tree extends List
 	public function Tree()
 	{
 		super();
-		sp
+		
 		// Handle styles when getStyle() will return corrent values.
 		addEventListener(FlexEvent.PREINITIALIZE, preinitializeHandler);
 		

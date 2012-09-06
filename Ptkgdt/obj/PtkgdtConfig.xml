@@ -21,13 +21,12 @@
     <verbose-stacktraces>true</verbose-stacktraces>
     <source-path append="true">
       <path-element>D:\private_projects\GitHub\FlexStuff\Ptkgdt\src</path-element>
-      <path-element>D:\private_projects\GitHub\FlexStuff\libFlex\bin</path-element>
+      <path-element>D:\private_projects\GitHub\FlexStuff\libFlex4\bin</path-element>
       <path-element>C:\Program Files\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
     <library-path append="true">
-      <path-element>D:\private_projects\GitHub\FlexStuff\libFlex\bin\libFlex.swc</path-element>
       <path-element>D:\private_projects\GitHub\FlexStuff\Ptkgdt\lib\tink_flex4_spark.swc</path-element>
-      <path-element>D:\private_projects\GitHub\FlexStuff\Ptkgdt\lib\SparkTree4.5.swc</path-element>
+      <path-element>D:\private_projects\GitHub\FlexStuff\libFlex4\bin\libFlex4.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>
