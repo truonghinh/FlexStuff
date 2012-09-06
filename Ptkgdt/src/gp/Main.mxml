@@ -5,7 +5,8 @@
 			   xmlns:os="http://openscales.org"
 			   xmlns:st="library://ns.tink.ws/flex/spark"
 			   xmlns:sparkTree="gp.comps.sparkTree.*"
-			   initialize="initCollections();" creationComplete="initAccording();">
+			   xmlns:comp="gp.comps.*"
+			   initialize="initCollections();">
 	<fx:Style source="../defaults.css" />
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -208,54 +209,9 @@
 									<s:layout>
 										<s:VerticalLayout paddingBottom="6" paddingLeft="6" paddingRight="0" paddingTop="6" gap="0"/>
 									</s:layout>-->
-							<mx:Accordion openDuration="1000" openEasingFunction="{Bounce.easeOut}" width="100%" height="100%" id="leftAccording" styleName="leftTreeContentStyle">
-								<mx:VBox label="Trước 1859" width="100%" resizeEffect="Resize">
-									<sparkTree:Tree 
-										dataProvider="{dataProvider}" id="tree1"
-										labelField="{dataProvider is XMLListCollection ? '@label' : 'label'}"
-										width="100%" height="100%" textRollOverColor="0x5E2600" 
-										textSelectedColor="0xFFFFFF" dragEnabled="false" dropEnabled="false"
-										dragMoveEnabled="false" change="onChangeListItem(event)">
-										<sparkTree:layout>
-											<s:TileLayout horizontalGap="0" verticalGap="0" orientation="columns"/>
-										</sparkTree:layout>
-									</sparkTree:Tree>
-								</mx:VBox>
-								<mx:VBox label="Giai đoạn 1859-1919">
-									<sparkTree:Tree dataProvider="{dataProvider}" id="tree2"
-										labelField="{dataProvider is XMLListCollection ? '@label' : 'label'}"
-										width="100%" height="100%" textRollOverColor="0x5E2600" 
-										textSelectedColor="0xFFFFFF" dragEnabled="false" dropEnabled="false"
-										dragMoveEnabled="false" change="onChangeListItem(event)">
-										<sparkTree:layout>
-											<s:TileLayout horizontalGap="0" verticalGap="0" orientation="columns"/>
-										</sparkTree:layout>
-									</sparkTree:Tree>
-								</mx:VBox>
-								<mx:VBox label="Giai đoạn 1919-1945">
-									<sparkTree:Tree dataProvider="{dataProvider}" id="tree3"
-										labelField="{dataProvider is XMLListCollection ? '@label' : 'label'}"
-										width="100%" height="100%" textRollOverColor="yellow" 
-										textSelectedColor="0xFFFFFF" dragEnabled="false" dropEnabled="false"
-										dragMoveEnabled="false" change="onChangeListItem(event)">
-										<sparkTree:layout>
-											<s:TileLayout horizontalGap="0" verticalGap="0" orientation="columns"/>
-										</sparkTree:layout>
-									</sparkTree:Tree>
-								</mx:VBox>
-								<mx:VBox label="Giai đoạn 11945-1954">
-									<sparkTree:Tree dataProvider="{dataProvider}" id="tree4"
-										labelField="{dataProvider is XMLListCollection ? '@label' : 'label'}"
-										width="100%" height="100%" textRollOverColor="yellow" 
-										textSelectedColor="0xFFFFFF" dragEnabled="false" dropEnabled="false"
-										dragMoveEnabled="false" change="onChangeListItem(event)">
-										<sparkTree:layout>
-											<s:TileLayout horizontalGap="0" verticalGap="0" orientation="columns"/>
-										</sparkTree:layout>
-									</sparkTree:Tree>
-								</mx:VBox>
-								
-							</mx:Accordion>
+									<comp:EventTreeAccordion width="100%" height="100%" />
+							
+							
 							<!--</s:Group>
 							</s:Scroller>-->
 							<!--<s:Group width="100%" height="200" styleName="darkGreyBg" resizeEffect="Resize" id="navBox">
@@ -637,128 +593,8 @@
 			 * ===================================
 			 * -------Bat dau cho left According
 			 * */
-			[Bindable]private var dataProvider:IList = getRandomArrayCollection();
-			 private function initAccording():void
-			{
-				var a:CustomItemClickItemRenderer
-				//
-				//dataProvider[0].children = getRandomArrayCollection();
-				for (var i:int = 0; i < leftAccording.numChildren; i++)
-                {
-					var con:VBox = leftAccording.getChildAt(i) as VBox;
-					var na:String = leftAccording.getChildAt(i) + "";
-					
-					for (var j:int = 0; j < con.numChildren; j++)
-					{
-						var cl:String = flash.utils.getQualifiedClassName(con.getChildAt(j));
-						//Alert.show("aaaaa", cl);
-					}
-					//tree1.addEventListener(ItemClickEvent.ITEM_CLICK, treeItemClickHandler);
-                    //var stringName:String = testGroup.getChildAt(i) + "";
-                    //if (stringName.indexOf(".") > 0)
-                    //{
-                        //stringName = stringName.substr(stringName.lastIndexOf(".")+1, stringName.length);
-                    //}
-                    //messageText += "\n" + (i+1) + ". " + stringName;
-                }
-			}
-			private function treeItemClickHandler(evt:ItemClickEvent):void
-			{
-				
-				
-			}
-			private function getRandomArrayCollection():ArrayCollection
-			{
-				var array:Array = 
-					[
-						/*new SampleData("Element 0"),
-						new SampleData("Element 1"),
-						new SampleData("Element 2")*/
-						new EventObj("Giai đoạn 1", "1994-1999", new Time(), new Time(), "giaidoan1"),
-						new EventObj("Giai đoạn 2", "1994-1999", new Time(), new Time(), "giaidoan2"),
-						new EventObj("Giai đoạn 3", "1994-1999", new Time(), new Time(), "giaidoan3")
-					];
-				return new ArrayCollection(array);
-			}
-			private function iconFunction(item:Object, isOpen:Boolean, isBranch:Boolean):Class
-			{
-				if (isOpen)
-					return SampleData.ICON1;
-				else if (isBranch)
-					return SampleData.ICON2;
-				return SampleData.ICON3;
-			}
-			private function onChangeListItem(evt:IndexChangeEvent):void {
-				
-				var data:EventObj = evt.currentTarget.selectedItem;
-				var className:String = flash.utils.getQualifiedClassName( data );
-                Alert.show("a", className + " " + data.firstTime.Now());
-				var lst:List =evt.currentTarget as List;
-				lst.selectedIndex = -1;
-				
-            }
-			/*private function addChildrenToSelectedItem():void
-			{
-				tree.selectedItem.children = getRandomArrayCollection();
-			}
 			
-			private function removeChildrenFromSelectedItem():void
-			{
-				tree.selectedItem.children = null;
-			}
-
-			private function add1000Children():void
-			{
-				var n:int = 1000;
-				var children:ArrayCollection = tree.selectedItem.children;
-				if (!children)
-					children = new ArrayCollection();
-				children.disableAutoUpdate();
-				for (var i:int = 0; i < n; i++)
-				{
-					children.addItem(new SampleData("Element " + i, "Comment " + i));
-				}
-				children.enableAutoUpdate();
-				tree.selectedItem.children = children;
-			}
-
-			private function setRandomIcon():void
-			{
-				SampleData(tree.selectedItem).setRandomIcon();
-			}
-
-			private function emptyChildrenCollection():void
-			{
-				IList(tree.selectedItem.children).removeAll();
-			}
-
-			private function refreshDataProvider():void
-			{
-				ICollectionView(tree.dataProvider).refresh();
-			}
-
-			private function removeSelectedItem():void
-			{
-				tree.dataProvider.removeItemAt(tree.selectedIndex);
-			}
-
-			private function addItemHere():void
-			{
-				tree.dataProvider.addItemAt(new SampleData("Added element"), tree.selectedIndex);
-			}*/
 			
-			private function setXMLDataProvider():void
-			{
-				var xml:XML = <root>
-					<folder label="branch1" data="19">
-						<folder label="branch2" data="16">
-							<folder label="Click Me will trigger exception" data="17" isBranch="true"/>
-						</folder>
-					</folder>
-				</root>;
-				var collection:XMLListCollection = new XMLListCollection(xml.children());
-				dataProvider = collection;
-			}
 			 /*
 			  * --------Ket thuc left According
 			  * ==================================
