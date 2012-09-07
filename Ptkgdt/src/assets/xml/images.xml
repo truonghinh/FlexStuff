@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <images>
     <image>
-        <thumb>images/image1.jpg</thumb>
+        <thumb>../assets/images/image1.jpg</thumb>
     </image>
-    <image>
-        <thumb>images/image2.jpg</thumb>
+    <!--<image>
+        <thumb>../assets/images/image2.jpg</thumb>
     </image>
     <image>
         <thumb>images/image3.jpg</thumb>
@@ -29,5 +29,5 @@
     </image>
     <image>
         <thumb>images/image10.jpg</thumb>
-    </image>
+    </image>-->
 </images>

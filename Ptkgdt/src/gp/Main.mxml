@@ -544,8 +544,9 @@
 				<s:layout>
 					<s:HorizontalLayout paddingBottom="2" paddingLeft="2" paddingRight="2" paddingTop="2" verticalAlign="top"/>
 				</s:layout>
-				<!--<mx:HorizontalList height="100%" borderStyle="none" width="100%" styleName="lightBoxBg" dataProvider="{imageData.image}" itemRenderer="renderItems.imageRender" columnWidth="100" horizontalScrollPolicy="on" horizontalScrollBarStyleName="trayScrollBar">
-				</mx:HorizontalList>-->
+				
+				<mx:HorizontalList id="myList" height="100%" borderStyle="none" width="100%" itemRenderer="gp.imageRender" creationComplete="initCatalog(images);" columnWidth="100" horizontalScrollPolicy="on">
+				</mx:HorizontalList>
 			</s:BorderContainer>
 		</s:Group>
 		
@@ -554,7 +555,7 @@
 			<s:layout>
 				<s:VerticalLayout verticalAlign="middle" horizontalAlign="center"/>
 			</s:layout>
-			<mx:Button width="20" height="8" styleName="collapseDown" toggle="true" click="sizeBottomPanel();"/>
+			<mx:Button width="20" height="8" toggle="true" click="sizeBottomPanel();"/>
 		</s:Group>
 		
 	</s:BorderContainer>
@@ -567,6 +568,7 @@
 			import gp.data.EventObj;
 			import gp.data.Time;
 			import gp.skins.CustomItemClickItemRenderer;
+			import mx.collections.ArrayList;
 			import mx.containers.VBox;
 			import mx.controls.Alert;
 			import mx.core.Container;
@@ -599,6 +601,26 @@
 			  * --------Ket thuc left According
 			  * ==================================
 			  * */
+			 
+			  
+			  
+			  /*
+			 * ===================================
+			 * ===================================
+			 * -------Bat dau tao anh video
+			 * */
+			private var catalog:ArrayList;
+			private static var images:Array = ["data/images/image1.jpg", "data/images/image2.jpg"];
+			  
+			private function initCatalog(items:Array):void {
+				catalog = new ArrayList(items);
+				myList.dataProvider = catalog;
+            }
+			 /*
+			  * --------Ket thuc tao anh video
+			  * ==================================
+			  * */
+			  
 			
 			public function sizeTopPanel():void
 			{

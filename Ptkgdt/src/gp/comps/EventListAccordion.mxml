@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Accordion xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			  xmlns:s="library://ns.adobe.com/flex/spark" 
+			  xmlns:mx="library://ns.adobe.com/flex/mx"
+			  xmlns:sparkTree="gp.comps.sparkTree.*"
+			  width="400" height="300"
+			  openDuration="1000" openEasingFunction="{Bounce.easeOut}"
+			  styleName="leftTreeContentStyle"
+			  creationComplete="initAccording();">
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<mx:Accordion>
+		<s:List id="list"
+            labelField="label"
+            itemRenderer="skins.CustomIconItemRenderer"
+            horizontalCenter="0"
+            verticalCenter="0">
+        <s:dataProvider>
+            <s:ArrayList>
+                <fx:Object label="red" ico="@Embed('assets/bullet_red.png')" />
+                <fx:Object label="orange" ico="@Embed('assets/bullet_orange.png')" />
+                <fx:Object label="yellow" ico="@Embed('assets/bullet_yellow.png')" />
+                <fx:Object label="green" ico="@Embed('assets/bullet_green.png')" />
+                <fx:Object label="blue" ico="@Embed('assets/bullet_blue.png')" />
+            </s:ArrayList>
+        </s:dataProvider>
+    </s:List>
+	</mx:Accordion>
+	
+</s:Accordion>
